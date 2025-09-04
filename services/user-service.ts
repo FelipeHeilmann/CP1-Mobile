@@ -5,7 +5,7 @@ export type User = {
   email: string;
   avatar: string;
 };
-export const getUsers = async (): Promise<User[]> => {
+export async function getUsers(): Promise<User[]> {
   try {
     const json = await AsyncStorage.getItem('users');
     return json ? JSON.parse(json) : [];
@@ -14,7 +14,7 @@ export const getUsers = async (): Promise<User[]> => {
     return [];
   }
 };
-export const saveUsers = async (users: User[]): Promise<void> => {
+export async function saveUsers(users: User[]): Promise<void>{
   try {
     await AsyncStorage.setItem('users', JSON.stringify(users));
   } catch (error) {
@@ -22,11 +22,10 @@ export const saveUsers = async (users: User[]): Promise<void> => {
     throw new Error('Falha ao salvar dados');
   }
 };
-export const addUser = async (user: User): Promise<void> => {
+export async function addUser(user: User): Promise<void> {
   try {
     const users = await getUsers();
     
-    // Verifica se já existe um usuário com o mesmo email
     const existingUser = users.find(u => u.email.toLowerCase() === user.email.toLowerCase());
     if (existingUser) {
       throw new Error('Já existe um usuário com este email');
@@ -39,7 +38,7 @@ export const addUser = async (user: User): Promise<void> => {
     throw error;
   }
 };
-export const updateUser = async (user: User): Promise<void> => {
+export async function updateUser(user: User): Promise<void>{
   try {
     const users = await getUsers();
     const idx = users.findIndex(u => u.id === user.id);
@@ -61,7 +60,7 @@ export const updateUser = async (user: User): Promise<void> => {
     throw error;
   }
 };
-export const deleteUser = async (id: string): Promise<void> => {
+export async function deleteUser(id: string): Promise<void> {
   try {
     const users = await getUsers();
     const filtered = users.filter(u => u.id !== id);

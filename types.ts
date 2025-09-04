@@ -1,4 +1,4 @@
-import { User } from './userStorage';
+import { User } from './services/user-service';
 
 export type RootStackParamList = {
   UserList: undefined;

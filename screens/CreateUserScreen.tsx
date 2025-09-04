@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, Alert } from 'react-native';
-import { addUser } from './userStorage';
+import { addUser } from '../services/user-service';
 import { useNavigation } from '@react-navigation/native';
-import { generateUUID } from './utils';
+import { generateUUID } from '../utils';
+
 export default function CreateUserScreen() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -42,12 +43,13 @@ export default function CreateUserScreen() {
       return;
     }
 
-    setIsLoading(true);    try {
-      await addUser({ 
-        id: generateUUID(), 
-        nome: nome.trim(), 
-        email: email.trim(), 
-        avatar: avatar.trim() 
+    setIsLoading(true);
+    try {
+      await addUser({
+        id: generateUUID(),
+        nome: nome.trim(),
+        email: email.trim(),
+        avatar: avatar.trim()
       });
       Keyboard.dismiss();
       Alert.alert('Sucesso', 'Usuário criado com sucesso!', [
@@ -60,38 +62,42 @@ export default function CreateUserScreen() {
     } finally {
       setIsLoading(false);
     }
-  };  return (
+  };
+
+  return (
     <View style={styles.container}>
-      <Text style={styles.title}>Novo Usuário</Text>
-      <TextInput 
-        style={styles.input} 
-        placeholder="Nome" 
-        value={nome} 
-        onChangeText={setNome} 
+      <Text style={styles.title}>🆕 Novo Usuário</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        value={nome}
+        onChangeText={setNome}
         autoCapitalize="words"
         editable={!isLoading}
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Email" 
-        value={email} 
-        onChangeText={setEmail} 
-        keyboardType="email-address" 
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
         autoCapitalize="none"
         editable={!isLoading}
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="URL do Avatar" 
-        value={avatar} 
-        onChangeText={setAvatar} 
+      <TextInput
+        style={styles.input}
+        placeholder="URL do Avatar"
+        value={avatar}
+        onChangeText={setAvatar}
         autoCapitalize="none"
         editable={!isLoading}
       />
-      <TouchableOpacity 
-        style={[styles.saveBtn, (!isFormValid || isLoading) && styles.saveBtnDisabled]} 
-        disabled={!isFormValid || isLoading} 
-        onPress={handleSave} 
+
+      <TouchableOpacity
+        style={[styles.saveBtn, (!isFormValid || isLoading) && styles.saveBtnDisabled]}
+        disabled={!isFormValid || isLoading}
+        onPress={handleSave}
         activeOpacity={isFormValid && !isLoading ? 0.7 : 1}
       >
         <Text style={[styles.saveText, (!isFormValid || isLoading) && styles.saveTextDisabled]}>
@@ -103,59 +109,52 @@ export default function CreateUserScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#e3f2fd', // azul claro
-    padding: 24, 
-    justifyContent: 'center' 
+  container: {
+    flex: 1,
+    backgroundColor: '#f9fafb',
+    padding: 20,
+    justifyContent: 'center'
   },
-  title: { 
-    fontSize: 32, 
-    color: '#1976d2', // azul escuro
-    fontWeight: 'bold', 
-    marginBottom: 32, 
-    alignSelf: 'center',
-    letterSpacing: 1,
+  title: {
+    fontSize: 26,
+    color: '#111827',
+    fontWeight: 'bold',
+    marginBottom: 30,
+    alignSelf: 'center'
   },
-  input: { 
-    backgroundColor: '#fff', 
-    borderRadius: 16, 
-    padding: 16, 
-    fontSize: 18, 
-    marginBottom: 20,
+  input: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 16,
+    fontSize: 16,
+    marginBottom: 18,
     borderWidth: 1,
-    borderColor: '#1976d233', // azul escuro com transparência
-    shadowColor: '#1976d2',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
     elevation: 2,
   },
-  saveBtn: { 
-    backgroundColor: '#1976d2', // azul escuro
-    borderRadius: 24, 
-    paddingVertical: 18, 
-    paddingHorizontal: 32,
-    alignItems: 'center', 
-    marginTop: 16,
-    shadowColor: '#1976d2',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 3,
+  saveBtn: {
+    backgroundColor: '#2563eb',
+    borderRadius: 24,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginTop: 10,
+    elevation: 4
   },
-  saveBtnDisabled: { 
+  saveBtnDisabled: {
     opacity: 0.5,
-    backgroundColor: '#1976d299',
+    backgroundColor: '#93c5fd',
   },
-  saveText: { 
-    color: '#fff', 
-    fontWeight: 'bold', 
-    fontSize: 20,
+  saveText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
     letterSpacing: 0.5,
   },
-  saveTextDisabled: { 
-    color: '#fff', 
-    opacity: 0.7,
+  saveTextDisabled: {
+    color: '#f0f0f0',
   },
 });

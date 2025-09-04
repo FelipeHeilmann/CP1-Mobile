@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
-import { getUsers, deleteUser, User } from './userStorage';
-import { useNavigation, useIsFocused, NavigationProp, useFocusEffect } from '@react-navigation/native';
+import { getUsers, deleteUser, User } from '../services/user-service';
+import { useNavigation, NavigationProp, useFocusEffect } from '@react-navigation/native';
 
 type RootStackParamList = {
   EditUser: { user: User };
@@ -44,7 +44,7 @@ export default function UserListScreen() {
           onPress: async () => {
             try {
               await deleteUser(id);
-              await loadUsers(); // Recarrega a lista
+              await loadUsers();
               Alert.alert('Sucesso', 'Usuário excluído com sucesso!');
             } catch (error) {
               const errorMessage = error instanceof Error ? error.message : 'Erro ao excluir usuário.';
@@ -56,44 +56,49 @@ export default function UserListScreen() {
       ]
     );
   }, [loadUsers]);
+
   return (
     <View style={styles.container}>
+      {/* HEADER */}
       <View style={styles.header}>
+        <Text style={styles.title}>👥 Usuários</Text>
         <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreateUser')}>
-          <Text style={styles.addIcon}>+</Text>
+          <Text style={styles.addIcon}>＋</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Lista de usuários</Text>
       </View>
+
+      {/* LISTA */}
       <FlatList
         data={users}
         keyExtractor={item => item.id}
         refreshing={isLoading}
         onRefresh={loadUsers}
-       renderItem={({ item }) => (
-        <View style={styles.userCard}>
-          <Image 
-            source={{ uri: 'https://randomuser.me/api/portraits/men/1.jpg' }} 
-            style={styles.avatar}
-          />
-          <View style={styles.info}>
-            <Text style={styles.nome}>{item.nome}</Text>
-            <Text style={styles.email}>{item.email}</Text>
+        renderItem={({ item }) => (
+          <View style={styles.userCard}>
+            <Image 
+              source={{ uri: item.avatar }} 
+              style={styles.avatar}
+            />
+            <View style={styles.info}>
+              <Text style={styles.nome}>{item.nome}</Text>
+              <Text style={styles.email}>{item.email}</Text>
+            </View>
+            <View style={styles.actions}>
+              <TouchableOpacity style={[styles.actionButton, styles.editButton]} onPress={() => navigation.navigate('EditUser', { user: item })}>
+                <Text style={styles.actionIcon}>✎</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.actionButton, styles.deleteButton]} onPress={() => handleDeleteUser(item.id, item.nome)}>
+                <Text style={styles.actionIcon}>🗑</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.actions}>
-            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('EditUser', { user: item })}>
-              <Text style={styles.editIcon}>✎</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton} onPress={() => handleDeleteUser(item.id, item.nome)}>
-              <Text style={styles.deleteIcon}>×</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+        )}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>Nenhum usuário cadastrado</Text>
-            <Text style={styles.emptySubText}>Toque em "Novo Usuário" para começar</Text>
-          </View>        )}
+            <Text style={styles.emptySubText}>Toque em "＋" para adicionar</Text>
+          </View>        
+        )}
       />
     </View>
   );
@@ -102,36 +107,28 @@ export default function UserListScreen() {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#e3f2fd', // azul claro
-    padding: 24 
+    backgroundColor: '#f9fafb', 
+    padding: 20 
   },
   header: { 
-    flexDirection: 'row-reverse',
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    marginBottom: 24, 
-    position: 'relative' 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-between', 
+    marginBottom: 20
   },
   title: { 
-    fontSize: 32, 
-    color: '#1976d2', // azul escuro
-    fontWeight: 'bold',
-    letterSpacing: 1,
+    fontSize: 26, 
+    color: '#111827',
+    fontWeight: 'bold'
   },
   addButton: { 
-    position: 'absolute', 
-    right: 0, 
-    backgroundColor: '#1976d2', // azul escuro
-    borderRadius: 20, 
-    width: 44, 
-    height: 44, 
+    backgroundColor: '#2563eb', 
+    borderRadius: 50, 
+    width: 48, 
+    height: 48, 
     alignItems: 'center', 
     justifyContent: 'center',
-    shadowColor: '#1976d2',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 3,
+    elevation: 4
   },
   addIcon: { 
     fontSize: 28, 
@@ -142,73 +139,68 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     backgroundColor: '#fff', 
     borderRadius: 16, 
-    marginBottom: 16, 
+    marginBottom: 14, 
     alignItems: 'center', 
     padding: 16,
-    borderWidth: 1,
-    borderColor: '#1976d233',
-    shadowColor: '#1976d2',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 3,
   },
   avatar: { 
-    width: 64, 
-    height: 64, 
-    borderRadius: 32, 
-    marginRight: 16, 
+    width: 60, 
+    height: 60, 
+    borderRadius: 30, 
+    marginRight: 14, 
     borderWidth: 2,
-    borderColor: '#1976d2'
+    borderColor: '#2563eb'
   },
   info: { flex: 1 },
   nome: { 
-    fontSize: 20, 
-    fontWeight: 'bold', 
-    color: '#1976d2' 
+    fontSize: 18, 
+    fontWeight: '600', 
+    color: '#111827' 
   },
   email: { 
-    fontSize: 16, 
-    color: '#333' 
+    fontSize: 14, 
+    color: '#6b7280', 
+    marginTop: 2
   },
   actions: { 
     flexDirection: 'row' 
   },
   actionButton: { 
-    backgroundColor: '#e3f2fd',
-    borderRadius: 16, 
-    width: 36, 
-    height: 36, 
+    borderRadius: 10, 
+    width: 38, 
+    height: 38, 
     alignItems: 'center', 
     justifyContent: 'center', 
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: '#1976d233'
+    marginLeft: 8
   },
-  editIcon: { 
-    fontSize: 18, 
-    color: '#1976d2', 
-    fontWeight: 'bold' 
+  editButton: {
+    backgroundColor: '#e0f2fe'
   },
-  deleteIcon: { 
-    fontSize: 20, 
-    color: '#1976d2', 
-    fontWeight: 'bold' 
+  deleteButton: {
+    backgroundColor: '#fee2e2'
+  },
+  actionIcon: {
+    fontSize: 18,
+    color: '#1e3a8a'
   },
   emptyContainer: { 
     alignItems: 'center', 
     justifyContent: 'center', 
-    paddingVertical: 40 
+    paddingVertical: 60 
   },
   emptyText: { 
     fontSize: 18, 
-    color: '#1976d2', 
-    fontWeight: 'bold', 
-    marginBottom: 8 
+    color: '#374151', 
+    fontWeight: '600',
+    marginBottom: 6
   },
   emptySubText: { 
     fontSize: 14, 
-    color: '#1976d2', 
-    opacity: 0.8 
+    color: '#6b7280'
   },
 });

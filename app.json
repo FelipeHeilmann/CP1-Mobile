@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "appCp1",
-    "slug": "appCp1",
+    "name": "UsersAppCP",
+    "slug": "UsersAppCP",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
