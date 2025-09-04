@@ -107,7 +107,7 @@ export default function UserListScreen() {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#f9fafb', 
+    backgroundColor: '#fff0f6', // tom claro do rosa principal
     padding: 20 
   },
   header: { 
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
   },
   title: { 
     fontSize: 26, 
-    color: '#111827',
+    color: '#ed145b', // cor principal
     fontWeight: 'bold'
   },
   addButton: { 
-    backgroundColor: '#2563eb', 
+    backgroundColor: '#ed145b', // cor principal
     borderRadius: 50, 
     width: 48, 
     height: 48, 
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     marginBottom: 14, 
     alignItems: 'center', 
     padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
+    shadowColor: '#ed145b',
+    shadowOpacity: 0.08,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,
     elevation: 3,
@@ -154,17 +154,17 @@ const styles = StyleSheet.create({
     borderRadius: 30, 
     marginRight: 14, 
     borderWidth: 2,
-    borderColor: '#2563eb'
+    borderColor: '#ed145b' // cor principal
   },
   info: { flex: 1 },
   nome: { 
     fontSize: 18, 
     fontWeight: '600', 
-    color: '#111827' 
+    color: '#ed145b' // cor principal
   },
   email: { 
     fontSize: 14, 
-    color: '#6b7280', 
+    color: '#b71c47', // tom escuro do rosa principal
     marginTop: 2
   },
   actions: { 
@@ -179,14 +179,14 @@ const styles = StyleSheet.create({
     marginLeft: 8
   },
   editButton: {
-    backgroundColor: '#e0f2fe'
+    backgroundColor: '#f7b6d0' // tom claro do rosa principal
   },
   deleteButton: {
-    backgroundColor: '#fee2e2'
+    backgroundColor: '#ffe2ec' // tom ainda mais claro do rosa principal
   },
   actionIcon: {
     fontSize: 18,
-    color: '#1e3a8a'
+    color: '#ed145b' // cor principal
   },
   emptyContainer: { 
     alignItems: 'center', 
@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
   },
   emptyText: { 
     fontSize: 18, 
-    color: '#374151', 
+    color: '#ed145b', // cor principal
     fontWeight: '600',
     marginBottom: 6
   },
   emptySubText: { 
     fontSize: 14, 
-    color: '#6b7280'
+    color: '#b71c47' // tom escuro do rosa principal
   },
 });

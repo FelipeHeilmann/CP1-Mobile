@@ -111,13 +111,13 @@ export default function CreateUserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fff0f6',
     padding: 20,
     justifyContent: 'center'
   },
   title: {
     fontSize: 26,
-    color: '#111827',
+    color: '#ed145b',
     fontWeight: 'bold',
     marginBottom: 30,
     alignSelf: 'center'
@@ -129,15 +129,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 18,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
+    borderColor: '#ed145b',
+    shadowColor: '#ed145b',
+    shadowOpacity: 0.08,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,
     elevation: 2,
   },
   saveBtn: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#ed145b',
     borderRadius: 24,
     paddingVertical: 16,
     alignItems: 'center',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   saveBtnDisabled: {
     opacity: 0.5,
-    backgroundColor: '#93c5fd',
+    backgroundColor: '#f7b6d0',
   },
   saveText: {
     color: '#fff',
@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   saveTextDisabled: {
-    color: '#f0f0f0',
+    color: '#fff0f6',
   },
 });

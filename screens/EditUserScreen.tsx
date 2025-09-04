@@ -119,44 +119,47 @@ export default function EditUserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fff0f6', // tom claro do rosa principal
     padding: 20,
     justifyContent: 'center',
   },
   title: {
     fontSize: 26,
-    color: '#111827',
+    color: '#ed145b', // cor principal
     fontWeight: 'bold',
     marginBottom: 30,
     alignSelf: 'center',
   },
   input: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 14,
+    borderRadius: 16,
+    padding: 16,
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 18,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 5,
-    elevation: 1,
+    borderColor: '#ed145b', // cor principal
+    shadowColor: '#ed145b',
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 2,
   },
   saveBtn: {
-    backgroundColor: '#2563eb',
-    borderRadius: 20,
-    paddingVertical: 14,
+    backgroundColor: '#ed145b', // cor principal
+    borderRadius: 24,
+    paddingVertical: 16,
     alignItems: 'center',
     marginTop: 10,
+    elevation: 4,
   },
   saveBtnDisabled: {
-    backgroundColor: '#93c5fd',
+    opacity: 0.5,
+    backgroundColor: '#f7b6d0', // tom claro do rosa principal
   },
   saveText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
+    letterSpacing: 0.5,
   },
 });
